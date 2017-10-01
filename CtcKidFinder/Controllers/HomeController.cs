@@ -26,5 +26,10 @@ namespace CtcKidFinder.Controllers
 
             return View();
         }
+
+        public ActionResult FindChild()
+        {
+            return View();
+        }
     }
 }
