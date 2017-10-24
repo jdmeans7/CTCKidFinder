@@ -236,3 +236,7 @@ C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.csproj.CoreCompileInputs.cache
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.dll
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.pdb
+C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\PagedList.dll
+C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\PagedList.Mvc.dll
+C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\PagedList.xml
+C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\PagedList.Mvc.xml
