@@ -28,6 +28,10 @@
                     {
                         <li>@Html.ActionLink("Administration","Index","Admin")</li>
                     }
+                    @if (User.IsInRole("Parent"))
+                    {
+                        <li>@Html.ActionLink("Find Child", "Index","Parent")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

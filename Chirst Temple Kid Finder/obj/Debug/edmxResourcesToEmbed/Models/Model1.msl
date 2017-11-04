@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbcaa9cff9bf624b1ebcf9a8120126a40eModelStoreContainer" CdmEntityContainer="CodeDbContext">
+    <EntitySetMapping Name="CodeTables">
+      <EntityTypeMapping TypeName="dbcaa9cff9bf624b1ebcf9a8120126a40eModel.CodeTable">
+        <MappingFragment StoreEntitySet="CodeTable">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ChildCode" ColumnName="ChildCode" />
+          <ScalarProperty Name="Room_Number" ColumnName="Room Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
