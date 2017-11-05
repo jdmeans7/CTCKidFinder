@@ -46,7 +46,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ChildCode,Room_Number")] CodeTable codeTable)
+        public ActionResult Create([Bind(Include = "id,ChildCode,Room_Number")] CodeTable codeTable)
         {
 
             if (ModelState.IsValid)
