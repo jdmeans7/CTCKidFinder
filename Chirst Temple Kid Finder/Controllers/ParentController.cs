@@ -10,11 +10,19 @@ namespace Chirst_Temple_Kid_Finder.Controllers
     public class ParentController : Controller
     {  
         CodeDbContext db = new CodeDbContext();
-        public ActionResult Index(string search)
+        public ActionResult Index()
+        {
+            return View();
+        }
+        //db.CodeTables.Where(x => x.ChildCode.StartsWith(search) || search == null).ToList()
+
+        
+        /*
+        public ActionResult LookUp(string search)
         {
             return View(db.CodeTables.Where(x => x.ChildCode.StartsWith(search) || search == null).ToList());
         }
-
+        */
         // GET: Parent/Details/5
         public ActionResult Details(int id)
         {

@@ -85,6 +85,8 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+       
+
         // Roles *****************************
         // GET: /Admin/ViewAllRoles
         [Authorize(Roles = "Administrator")]

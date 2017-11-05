@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CodeTablesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ParentController.cs" />
@@ -318,6 +319,11 @@
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Parent\Index.cshtml" />
     <Content Include="Views\Parent\LookUp.cshtml" />
+    <Content Include="Views\CodeTables\Create.cshtml" />
+    <Content Include="Views\CodeTables\Delete.cshtml" />
+    <Content Include="Views\CodeTables\Details.cshtml" />
+    <Content Include="Views\CodeTables\Edit.cshtml" />
+    <Content Include="Views\CodeTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

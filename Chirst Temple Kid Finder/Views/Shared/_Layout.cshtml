@@ -27,11 +27,14 @@
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Administration","Index","Admin")</li>
+                        <li>@Html.ActionLink("Find Child","Index","CodeTables")</li>
                     }
-                    @if (User.IsInRole("Parent"))
+                    <!--
+                    @if (User.IsInRole("Parent") || User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Find Child", "Index","Parent")</li>
                     }
+                    -->
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
