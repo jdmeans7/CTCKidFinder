@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Computed" />
     <Property Name="ChildCode" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Room Number" Type="nchar" MaxLength="10" />
   </EntityType>

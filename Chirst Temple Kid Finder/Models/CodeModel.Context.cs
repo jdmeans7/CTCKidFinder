@@ -13,10 +13,10 @@ namespace Chirst_Temple_Kid_Finder.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CodeDbContext : DbContext
+    public partial class dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2 : DbContext
     {
-        public CodeDbContext()
-            : base("name=CodeDbContext")
+        public dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2()
+            : base("name=dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2")
         {
         }
     

@@ -12,7 +12,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 {
     public class CodeTablesController : Controller
     {
-        private CodeDbContext db = new CodeDbContext();
+        private dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2();
 
         // GET: CodeTables
         public ActionResult Index()
@@ -20,6 +20,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View(db.CodeTables.ToList());
         }
 
+        /*
         // GET: CodeTables/Details/5
         public ActionResult Details(int? id)
         {
@@ -34,7 +35,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             }
             return View(codeTable);
         }
-
+        */
         // GET: CodeTables/Create
         public ActionResult Create()
         {
@@ -46,9 +47,8 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,ChildCode,Room_Number")] CodeTable codeTable)
+        public ActionResult Create([Bind(Include = "Id,ChildCode,Room_Number")] CodeTable codeTable)
         {
-
             if (ModelState.IsValid)
             {
                 db.CodeTables.Add(codeTable);

@@ -232,7 +232,6 @@ C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\Microsoft.AI
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\bin\Microsoft.AI.Web.xml
-C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.csprojResolveAssemblyReference.cache
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.csproj.CoreCompileInputs.cache
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.dll
 C:\Users\jason\Source\Repos\CtcKidFind\Chirst Temple Kid Finder\obj\Debug\Chirst Temple Kid Finder.pdb

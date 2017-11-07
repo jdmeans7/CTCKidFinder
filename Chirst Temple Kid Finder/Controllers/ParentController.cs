@@ -9,7 +9,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 {
     public class ParentController : Controller
     {  
-        CodeDbContext db = new CodeDbContext();
+        //CodeDbContext db = new CodeDbContext();
         public ActionResult Index()
         {
             return View();

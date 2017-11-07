@@ -4,32 +4,32 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dbcaa9cff9bf624b1ebcf9a8120126a40eModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CodeTableModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CodeTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="ChildCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ChildCode" Type="nchar" MaxLength="5" Nullable="false" />
           <Property Name="Room Number" Type="nchar" MaxLength="10" />
         </EntityType>
-        <EntityContainer Name="dbcaa9cff9bf624b1ebcf9a8120126a40eModelStoreContainer">
+        <EntityContainer Name="CodeTableModelStoreContainer">
           <EntitySet Name="CodeTable" EntityType="Self.CodeTable" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="dbcaa9cff9bf624b1ebcf9a8120126a40eModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CodeTableModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="CodeTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ChildCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChildCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Room_Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="CodeDbContext" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CodeTables" EntityType="Self.CodeTable" />
         </EntityContainer>
       </Schema>
@@ -37,9 +37,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="dbcaa9cff9bf624b1ebcf9a8120126a40eModelStoreContainer" CdmEntityContainer="CodeDbContext">
+        <EntityContainerMapping StorageEntityContainer="CodeTableModelStoreContainer" CdmEntityContainer="dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2">
           <EntitySetMapping Name="CodeTables">
-            <EntityTypeMapping TypeName="dbcaa9cff9bf624b1ebcf9a8120126a40eModel.CodeTable">
+            <EntityTypeMapping TypeName="CodeTableModel.CodeTable">
               <MappingFragment StoreEntitySet="CodeTable">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChildCode" ColumnName="ChildCode" />
