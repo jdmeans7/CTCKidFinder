@@ -13,10 +13,10 @@ namespace Chirst_Temple_Kid_Finder.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2 : DbContext
+    public partial class dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 : DbContext
     {
-        public dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2()
-            : base("name=dbcaa9cff9bf624b1ebcf9a8120126a40eEntities2")
+        public dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3()
+            : base("name=dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3")
         {
         }
     
@@ -25,8 +25,7 @@ namespace Chirst_Temple_Kid_Finder.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CodeAssignTable> CodeAssignTables { get; set; }
         public virtual DbSet<CodeTable> CodeTables { get; set; }
-
-        public System.Data.Entity.DbSet<Chirst_Temple_Kid_Finder.Models.CodeAssignTable> CodeAssignTables { get; set; }
     }
 }

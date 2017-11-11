@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
+                @Html.ActionLink("Edit", "CodeAssignEdit", new { Email = item.Email }) |
                 @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
                 {
                     @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName },
