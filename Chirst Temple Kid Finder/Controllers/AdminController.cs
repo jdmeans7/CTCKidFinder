@@ -203,6 +203,10 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 
         // Users *****************************
 
+        dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3();
+        List<CodeAssignTable> needsUpdate = new List<CodeAssignTable>();
+
+
         // GET: /Admin/Edit/Create 
 
         [Authorize(Roles = "Administrator")]
@@ -280,6 +284,65 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+
+        //TODO: Figure out how to change data in codeassigntable when user email is edited
+
+        // GET: /Admin/Edit/TestUser 
+        [Authorize(Roles = "Administrator")]
+        #region public ActionResult EditUser(string UserName)
+        public ActionResult EditUser(string UserName)
+        {
+            if (UserName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ExpandedUserDTO objExpandedUserDTO = GetUser(UserName);
+            CodeAssignTable objCodeAssign = db.CodeAssignTables.First(x => x.Email == objExpandedUserDTO.Email);
+            addCodeToList(objCodeAssign);
+            if (objExpandedUserDTO == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objExpandedUserDTO);
+        }
+        #endregion
+
+        // PUT: /Admin/EditUser
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        #region public ActionResult EditUser(ExpandedUserDTO paramExpandedUserDTO)
+        public ActionResult EditUser(ExpandedUserDTO paramExpandedUserDTO)
+        {
+            try
+            {
+                if (paramExpandedUserDTO == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                ExpandedUserDTO objExpandedUserDTO = UpdateDTOUser(paramExpandedUserDTO);
+                CodeAssignTable objCodeAssign = pullFromList();
+                if(objCodeAssign != null)
+                {
+                    objCodeAssign.Email = paramExpandedUserDTO.Email;
+                    db.Entry(objCodeAssign).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                if (objExpandedUserDTO == null)
+                {
+                    return HttpNotFound();
+                }
+                return Redirect("~/Admin");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Error: " + ex);
+                return View("EditUser", GetUser(paramExpandedUserDTO.UserName));
+            }
+        }
+        #endregion
+
+
         // GET: /Admin/AssignCode 
         [Authorize(Roles = "Administrator")]
         #region public ActionResult CodeAssignEdit(string email)
@@ -298,7 +361,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
-        dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3();
+        
         // PUT: /Admin/AssignCode
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -679,7 +742,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         {
             CodeAssignTable objCodeATable = new CodeAssignTable();
 
-            var result = UserManager.FindByName(email);
+            var result = UserManager.FindByEmail(email);
 
             // If we could not find the user, throw an exception
             if (result == null) throw new Exception("Could not find the User");
@@ -688,6 +751,26 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             objCodeATable.Email = result.Email;
 
             return objCodeATable;
+        }
+
+        
+        private void addCodeToList(CodeAssignTable code)
+        {
+            needsUpdate.Add(code);
+        }
+
+        private CodeAssignTable pullFromList()
+        {
+            if(needsUpdate != null)
+            {
+                CodeAssignTable ret = needsUpdate.First();
+                needsUpdate.Clear();
+                return ret;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
