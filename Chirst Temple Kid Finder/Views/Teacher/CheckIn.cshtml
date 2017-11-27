@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Chirst_Temple_Kid_Finder.Models.CodeTable>
+
+@{
+    ViewBag.Title = "Check-In";
+}
+
+<head>
+    <style>
+        input[type=text]:focus {
+            border: 3px solid #808080;
+        }
+    </style>
+</head>
+
+<h2>Check-In</h2>
+
+@using (Html.BeginForm("Index", "Teacher", FormMethod.Post))
+{
+    @Html.Label("Room Number")
+    @Html.TextBox("roomNumber")
+    <br />
+    @Html.Label("Child Code")
+    @Html.TextBox("childCode")
+    <br />
+    <input type="submit" value="Check in">
+}
+
+
