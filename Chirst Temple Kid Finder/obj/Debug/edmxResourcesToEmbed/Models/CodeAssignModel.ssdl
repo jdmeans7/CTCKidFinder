@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CodeAssignModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CodeAssignTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="256" />
+    <Property Name="ChildCode" Type="nchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="CodeTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ChildCode" Type="nchar" MaxLength="5" Nullable="false" />
+    <Property Name="Room Number" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityContainer Name="CodeAssignModelStoreContainer">
+    <EntitySet Name="CodeAssignTable" EntityType="Self.CodeAssignTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CodeTable" EntityType="Self.CodeTable" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

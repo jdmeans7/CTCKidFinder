@@ -199,34 +199,58 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CodeAssignTablesController.cs" />
     <Compile Include="Controllers\CodeTablesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ParentController.cs" />
+    <Compile Include="Controllers\PresetsController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CodeModel.Context.cs">
+    <Compile Include="Models\CodeAssignModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CodeAssignModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodeAssignModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeAssignModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodeAssignModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeAssignModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodeAssignTable.cs">
+      <DependentUpon>CodeAssignModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodeModel.Context.cs">
       <DependentUpon>CodeModel.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\CodeModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>CodeModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\CodeModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>CodeModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\CodeTable.cs">
-      <DependentUpon>CodeModel.tt</DependentUpon>
+      <DependentUpon>CodeAssignModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LocationModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Preset.cs" />
+    <Compile Include="Models\TeacherViewModels.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -243,14 +267,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\CodeModel.Context.tt">
+    <Content Include="Models\CodeAssignModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodeAssignModel.edmx</DependentUpon>
+      <LastGenOutput>CodeAssignModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CodeAssignModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodeAssignModel.edmx</DependentUpon>
+      <LastGenOutput>CodeAssignModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CodeModel.Context.tt">
       <DependentUpon>CodeModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CodeModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\CodeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <Content Include="Models\CodeModel.edmx.diagram">
       <DependentUpon>CodeModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CodeModel.tt">
+      <DependentUpon>CodeModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CodeModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
@@ -258,13 +295,17 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="Models\CodeAssignModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CodeAssignModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CodeAssignModel.edmx.diagram">
+      <DependentUpon>CodeAssignModel.edmx</DependentUpon>
+    </Content>
     <EntityDeploy Include="Models\CodeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CodeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\CodeModel.edmx.diagram">
-      <DependentUpon>CodeModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -276,6 +317,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\CodeTables\Create.cshtml" />
+    <Content Include="Views\CodeTables\Delete.cshtml" />
+    <Content Include="Views\CodeTables\Details.cshtml" />
+    <Content Include="Views\CodeTables\Edit.cshtml" />
+    <Content Include="Views\CodeTables\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -317,13 +363,19 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\EditRoles.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
-    <Content Include="Views\Parent\Index.cshtml" />
-    <Content Include="Views\Parent\LookUp.cshtml" />
-    <Content Include="Views\CodeTables\Create.cshtml" />
-    <Content Include="Views\CodeTables\Delete.cshtml" />
-    <Content Include="Views\CodeTables\Details.cshtml" />
-    <Content Include="Views\CodeTables\Edit.cshtml" />
-    <Content Include="Views\CodeTables\Index.cshtml" />
+    <Content Include="Views\Admin\CodeAssignEdit.cshtml" />
+    <Content Include="Views\CodeAssignTables\Create.cshtml" />
+    <Content Include="Views\CodeAssignTables\Delete.cshtml" />
+    <Content Include="Views\CodeAssignTables\Details.cshtml" />
+    <Content Include="Views\CodeAssignTables\Edit.cshtml" />
+    <Content Include="Views\CodeAssignTables\Index.cshtml" />
+    <Content Include="Views\Teacher\Create.cshtml" />
+    <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\Teacher\Details.cshtml" />
+    <Content Include="Views\Teacher\Edit.cshtml" />
+    <Content Include="Views\Teacher\CheckIn.cshtml" />
+    <Content Include="Views\Admin\ViewAssignments.cshtml" />
+    <Content Include="Views\Location\KidLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -341,9 +393,7 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Code\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
