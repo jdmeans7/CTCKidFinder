@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Chirst_Temple_Kid_Finder.Models.CodeAssignTable>
+
+@{
+    ViewBag.Title = "ViewAssignments";
+}
+
+<h2>ViewAssignments</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChildCode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChildCode)
+        </td>
+    </tr>
+}
+
+</table>

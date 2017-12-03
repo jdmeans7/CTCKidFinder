@@ -26,5 +26,7 @@ namespace Chirst_Temple_Kid_Finder.Models
         }
     
         public virtual DbSet<CodeTable> CodeTables { get; set; }
+
+        public System.Data.Entity.DbSet<Chirst_Temple_Kid_Finder.Models.CodeAssignTable> CodeAssignTables { get; set; }
     }
 }

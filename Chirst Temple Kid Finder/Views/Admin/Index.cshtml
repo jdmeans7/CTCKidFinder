@@ -9,16 +9,17 @@
 <br />
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default"})
-    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-deafult"})
-    @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-deafult"})
+    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default"})
+    @Html.ActionLink("View Assignments", "ViewAssignments", null, new { @class = "btn btn-default"})
+    @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-default"})
 </p>
 <br />
 @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
 {
     <div class="form-group">
-        Search:&nbsp; @Html.TextBox("searchStringUserNameUserNameOrEmail", ViewBag.CurrentFilter as string)
-
-        <input type="submit" value="Search" />
+       Search: @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string, new { @class= "form-control"})
+            
+        <input type="submit" value="Search" class="btn btn-block"/>
     </div>
 }
 <br />
@@ -27,9 +28,6 @@
     <tr>
         <th>
             Email
-        </th>
-        <th>
-            Role
         </th>
         <th></th>
     </tr>
@@ -40,7 +38,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
+            <td> 
                 @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
                 @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
                 {
@@ -51,4 +49,11 @@
         </tr>
     }
 </table>
+
+<div id='Paging' style="text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div> 
 

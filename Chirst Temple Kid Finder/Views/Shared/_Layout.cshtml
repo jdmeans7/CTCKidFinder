@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Christ Temple Church Kid Finder</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -17,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Christ Temple Kid Finder", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -27,7 +28,12 @@
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Administration","Index","Admin")</li>
-                        <li>@Html.ActionLink("Find Child","Index","CodeTables")</li>
+                        <li>@Html.ActionLink("Child Code List","Index","CodeTables")</li>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <li>@Html.ActionLink("Check-In","Index","Teacher")</li>
+                        <li>@Html.ActionLink("Message", "Message", "Teacher")</li>
                     }
                     <!--
                     @if (User.IsInRole("Parent") || User.IsInRole("Administrator"))
@@ -44,7 +50,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Christ Temple Church Kid Finder</p>
         </footer>
     </div>
 

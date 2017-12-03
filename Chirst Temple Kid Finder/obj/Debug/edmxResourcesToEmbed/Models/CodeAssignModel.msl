@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CodeAssignModelStoreContainer" CdmEntityContainer="dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3">
+    <EntitySetMapping Name="CodeAssignTables">
+      <EntityTypeMapping TypeName="CodeAssignModel.CodeAssignTable">
+        <MappingFragment StoreEntitySet="CodeAssignTable">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ChildCode" ColumnName="ChildCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CodeTables">
+      <EntityTypeMapping TypeName="CodeAssignModel.CodeTable">
+        <MappingFragment StoreEntitySet="CodeTable">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ChildCode" ColumnName="ChildCode" />
+          <ScalarProperty Name="Room_Number" ColumnName="Room Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

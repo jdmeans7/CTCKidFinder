@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Chirst_Temple_Kid_Finder.Models;
 using PagedList;
+using System.Data.Entity;
 #endregion Includes
 
 namespace Chirst_Temple_Kid_Finder.Controllers
@@ -73,7 +74,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 
                 // Set the number of pages
                 var _UserDTOAsIPagedList = new StaticPagedList<ExpandedUserDTO>(col_UserDTO, intPage, intPageSize, intTotalPageCount);
-
+                
                 return View(_UserDTOAsIPagedList);
             }
             catch (Exception ex)
@@ -85,7 +86,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
-       
+
 
         // Roles *****************************
         // GET: /Admin/ViewAllRoles
@@ -155,7 +156,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         public ActionResult DeleteUserRole(string RoleName)
         {
             try
-            { 
+            {
                 if (RoleName == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -165,7 +166,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 {
                     throw new Exception(String.Format("Cannot delete {0} Role.", RoleName));
                 }
-            
+
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
                 var UsersInRole = roleManager.FindByName(RoleName).Users.Count();
@@ -186,8 +187,8 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 {
                     throw new Exception(String.Format("Cannot delete {0} Role does not exist.", RoleName));
                 }
-          
-                List<RoleDTO> colRoleDTO = (from objRole in roleManager.Roles select new RoleDTO {ID = objRole.Id, RoleName = objRole.Name}).ToList();
+
+                List<RoleDTO> colRoleDTO = (from objRole in roleManager.Roles select new RoleDTO { ID = objRole.Id, RoleName = objRole.Name }).ToList();
 
                 return View("ViewAllRoles", colRoleDTO);
             }
@@ -195,13 +196,17 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Error: " + ex);
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-                List<RoleDTO> colRoleDTO = (from objRole in roleManager.Roles select new RoleDTO {ID = objRole.Id, RoleName = objRole.Name}).ToList();
+                List<RoleDTO> colRoleDTO = (from objRole in roleManager.Roles select new RoleDTO { ID = objRole.Id, RoleName = objRole.Name }).ToList();
                 return View("ViewAllRoles", colRoleDTO);
             }
         }
         #endregion
 
         // Users *****************************
+
+        dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3();
+        List<CodeAssignTable> needsUpdate = new List<CodeAssignTable>();
+
 
         // GET: /Admin/Edit/Create 
 
@@ -261,7 +266,29 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                         // Put user in role
                         UserManager.AddToRole(objNewAdminUser.Id, strNewRole);
                     }
-                    return Redirect("~/Admin");
+                    if (strNewRole == "Parent")
+                    {
+                        bool emailExists = db.CodeAssignTables.AsNoTracking().Any(e => e.Email.Equals(Email));
+                        List<CodeAssignTable> codeList = db.CodeAssignTables.AsNoTracking().ToList();
+
+                        int id = db.CodeAssignTables.Count();
+                        string gen = Generate();
+                        CodeAssignTable entryAdd = new CodeAssignTable
+                        {
+                            Id = id,
+                            Email = Email,
+                            ChildCode = gen
+                        };
+                        CodeTable codeEntryAdd = new CodeTable
+                        {
+                            Id = id,
+                            ChildCode = gen
+                        };
+                        db.CodeAssignTables.Add(entryAdd);
+                        db.CodeTables.Add(codeEntryAdd);
+                        db.SaveChanges();
+                    }
+                return Redirect("~/Admin");
                 }
                 else
                 {
@@ -280,6 +307,9 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+
+        //TODO: Figure out how to change data in codeassigntable when user email is edited
+
         // GET: /Admin/Edit/TestUser 
         [Authorize(Roles = "Administrator")]
         #region public ActionResult EditUser(string UserName)
@@ -290,6 +320,11 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ExpandedUserDTO objExpandedUserDTO = GetUser(UserName);
+            if (User.IsInRole("Parent"))
+            {
+                CodeAssignTable objCodeAssign = db.CodeAssignTables.First(x => x.Email == objExpandedUserDTO.Email);
+                addCodeToList(objCodeAssign);
+            }
             if (objExpandedUserDTO == null)
             {
                 return HttpNotFound();
@@ -297,6 +332,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View(objExpandedUserDTO);
         }
         #endregion
+
         // PUT: /Admin/EditUser
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -311,6 +347,13 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 ExpandedUserDTO objExpandedUserDTO = UpdateDTOUser(paramExpandedUserDTO);
+                CodeAssignTable objCodeAssign = pullFromList();
+                if(objCodeAssign != null)
+                {
+                    objCodeAssign.Email = paramExpandedUserDTO.Email;
+                    db.Entry(objCodeAssign).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
                 if (objExpandedUserDTO == null)
                 {
                     return HttpNotFound();
@@ -325,6 +368,125 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+        /*
+        // GET: /Admin/AssignCode 
+        [Authorize(Roles = "Administrator")]
+        #region public ActionResult CodeAssignEdit(string email)
+        public ActionResult CodeAssignEdit(string email)
+        {
+            if (email == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CodeAssignTable objCodeATable = GetCodeAssignUser(email);
+            if (objCodeATable == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objCodeATable);
+        }
+        #endregion
+
+        
+        // PUT: /Admin/AssignCode
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        #region public ActionResult CodeAssignEdit(CodeAssignTable paramCodeAssignTable)
+        public ActionResult CodeAssignEdit([Bind(Include = "Email, ChildCode")] CodeAssignTable paramCodeAssignTable)
+        {
+            try
+            {
+                if (paramCodeAssignTable == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                bool emailExists = db.CodeAssignTables.AsNoTracking().Any(email => email.Email.Equals(paramCodeAssignTable.Email));
+                List<CodeAssignTable> codeList = db.CodeAssignTables.AsNoTracking().ToList();
+
+                if (emailExists)
+                {
+                    CodeAssignTable entryUpdate = db.CodeAssignTables.FirstOrDefault(x => x.Email == paramCodeAssignTable.Email);
+                    entryUpdate.ChildCode = paramCodeAssignTable.ChildCode;
+                    db.Entry(entryUpdate).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                int id = db.CodeAssignTables.Count();
+                CodeAssignTable entryAdd = new CodeAssignTable
+                {
+                    Id = id,
+                    Email = paramCodeAssignTable.Email,
+                    ChildCode = paramCodeAssignTable.ChildCode
+                };
+                CodeTable codeEntryAdd = new CodeTable
+                {
+                    Id = id,
+                    ChildCode = paramCodeAssignTable.ChildCode
+                };
+                db.CodeAssignTables.Add(entryAdd);
+                db.CodeTables.Add(codeEntryAdd);
+                db.SaveChanges();
+            }
+            return Redirect("~/Admin");
+        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Error: " + ex);
+                return View("CodeAssignEdit", GetCodeAssignUser(paramCodeAssignTable.Email));
+            }
+        }
+        #endregion
+
+
+        public ActionResult CodeAssignEdit(string email)
+        {
+            try
+            {
+                
+                bool emailExists = db.CodeAssignTables.AsNoTracking().Any(e => e.Email.Equals(email));
+                List<CodeAssignTable> codeList = db.CodeAssignTables.AsNoTracking().ToList();
+
+                if (emailExists)
+                {
+                    CodeAssignTable entryUpdate = db.CodeAssignTables.FirstOrDefault(x => x.Email == email);
+                    if (entryUpdate.ChildCode == null)
+                    {
+                        entryUpdate.ChildCode = Generate();
+                        db.Entry(entryUpdate).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else throw new Exception("Code already assigned");
+                }
+                else
+                {
+                    int id = db.CodeAssignTables.Count();
+                    string gen = Generate();
+                    CodeAssignTable entryAdd = new CodeAssignTable
+                    {
+                        Id = id,
+                        Email = email,
+                        ChildCode = gen
+                    };
+                    CodeTable codeEntryAdd = new CodeTable
+                    {
+                        Id = id,
+                        ChildCode = gen
+                    };
+                    db.CodeAssignTables.Add(entryAdd);
+                    db.CodeTables.Add(codeEntryAdd);
+                    db.SaveChanges();
+                }
+                return Redirect("~/Admin");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Error: " + ex);
+                return View("Index", GetCodeAssignUser(email));
+            }
+        }
+        */
         // DELETE: /Admin/DeleteUser
         [Authorize(Roles = "Administrator")]
         #region public ActionResult DeleteUser(string UserName)
@@ -542,6 +704,26 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return paramExpandedUserDTO;
         }
         #endregion
+        /*
+        private CodeAssignTable UpdateCodeAssign(CodeAssignTable paramCodeAssign)
+        {
+            ApplicationUser result = UserManager.FindByName(paramCodeAssign.Email);
+            CodeAssignTable res = GetCodeAssignUser(paramCodeAssign.Email);
+            // If we could not find the user, throw an exception
+            if (result == null)
+            {
+                throw new Exception("Could not find the User");
+            }
+            result.Email = paramCodeAssign.Email;
+            res.Email = paramCodeAssign.Email;
+            res.ChildCode = paramCodeAssign.ChildCode;
+            
+            UserManager.Update(result);
+            
+            
+            return paramCodeAssign;
+        }
+        */
 
         #region private void DeleteUser(ExpandedUserDTO paramExpandedUserDTO)
         private void DeleteUser(ExpandedUserDTO paramExpandedUserDTO)
@@ -629,5 +811,72 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         #endregion
 
         #endregion
+
+        private CodeAssignTable GetCodeAssignUser(string email)
+        {
+            CodeAssignTable objCodeATable = new CodeAssignTable();
+
+            var result = UserManager.FindByEmail(email);
+
+            // If we could not find the user, throw an exception
+            if (result == null) throw new Exception("Could not find the User");
+
+
+            objCodeATable.Email = result.Email;
+
+            return objCodeATable;
+        }
+
+        
+        private void addCodeToList(CodeAssignTable code)
+        {
+            needsUpdate.Add(code);
+        }
+
+        private CodeAssignTable pullFromList()
+        {
+            if(needsUpdate != null)
+            {
+                CodeAssignTable ret = needsUpdate.First();
+                needsUpdate.Clear();
+                return ret;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /*
+        public ActionResult Generate(string email)
+        {
+            Random rand = new Random();
+            int code = rand.Next(10000, 100000); //add if code exists condition
+            int id = db.CodeTables.Count();
+            string codeS = code.ToString();
+            CodeAssignTable cat = GetCodeAssignUser(email);
+            if (cat == null)
+            {
+                return HttpNotFound();
+            }
+            cat.ChildCode = codeS;
+            CodeTable entryAdd = new CodeTable
+            {
+                Id = id,
+                ChildCode = codeS
+            };
+            db.CodeTables.Add(entryAdd);
+            db.Entry(cat).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        */
+
+        public String Generate()
+        {
+            Random rand = new Random();
+            int code = rand.Next(10000, 100000);
+            return code.ToString();
+        }
     }
 }
