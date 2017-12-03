@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Chirst_Temple_Kid_Finder.Models;
+using System.Net.Mail;
 
 namespace Chirst_Temple_Kid_Finder.Controllers
 {
@@ -141,6 +142,59 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // GET for Teacher/Message
+        public ActionResult Message()
+        {
+            return View();
+        }
+
+        // POST for Teacher/Message
+        public ActionResult SubmitMessage(MessageViewModel model)
+        {
+            String code = model.KidCode;
+
+            CodeAssignTable KidCodeLookup = db.CodeAssignTables.FirstOrDefault(x => x.ChildCode == code);
+
+            if (KidCodeLookup == null)
+            {
+                ModelState.AddModelError("Invalid KidCode", "Invalid KidCode, try again.");
+
+                return View("Message", model);
+            }
+
+            String To = KidCodeLookup.Email;
+            String Subject = model.Subject;
+            String From = "This message is from " + User.Identity.Name + " at Christ Temple Church." + Environment.NewLine;
+
+            String Message = From + Environment.NewLine + model.Message;
+
+            EmailConstruct(To, Subject, Message);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Creates and Send Email
+        public void EmailConstruct(String To, String Subject, String Message)
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add(To);
+            mail.From = new MailAddress("mu.az.camp@gmail.com");
+            mail.Subject = Subject;
+            mail.Body = Message;
+            //mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Port = 587;
+            smtp.Host = "smtp.gmail.com";
+            smtp.Credentials = new System.Net.NetworkCredential
+                 ("teacher.christtemplechurch@gmail.com", "CHRISTtemplechurch");
+            smtp.EnableSsl = true;
+            try
+            {
+                smtp.Send(mail);
+            }
+            catch (Exception e) { }
         }
     }
 }

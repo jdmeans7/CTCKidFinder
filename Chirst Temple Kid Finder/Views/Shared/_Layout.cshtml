@@ -32,6 +32,7 @@
                     @if (User.IsInRole("Teacher"))
                     {
                         <li>@Html.ActionLink("Check-In","Index","Teacher")</li>
+                        <li>@Html.ActionLink("Message", "Message", "Teacher")</li>
                     }
                     <!--
                     @if (User.IsInRole("Parent") || User.IsInRole("Administrator"))
