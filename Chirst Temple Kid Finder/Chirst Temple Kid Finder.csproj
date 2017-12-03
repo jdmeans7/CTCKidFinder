@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CodeAssignTablesController.cs" />
     <Compile Include="Controllers\CodeTablesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PresetsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
@@ -246,8 +247,10 @@
       <DependentUpon>CodeAssignModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LocationModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Preset.cs" />
+    <Compile Include="Models\TeacherViewModels.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -372,6 +375,7 @@
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\CheckIn.cshtml" />
     <Content Include="Views\Admin\ViewAssignments.cshtml" />
+    <Content Include="Views\Location\KidLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

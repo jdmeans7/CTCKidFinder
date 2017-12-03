@@ -74,7 +74,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 
                 // Set the number of pages
                 var _UserDTOAsIPagedList = new StaticPagedList<ExpandedUserDTO>(col_UserDTO, intPage, intPageSize, intTotalPageCount);
-
+                
                 return View(_UserDTOAsIPagedList);
             }
             catch (Exception ex)
