@@ -371,11 +371,7 @@
     <Content Include="Views\Teacher\Details.cshtml" />
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\CheckIn.cshtml" />
-    <Content Include="Views\Presets\Create.cshtml" />
-    <Content Include="Views\Presets\Delete.cshtml" />
-    <Content Include="Views\Presets\Details.cshtml" />
-    <Content Include="Views\Presets\Edit.cshtml" />
-    <Content Include="Views\Presets\Index.cshtml" />
+    <Content Include="Views\Admin\ViewAssignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

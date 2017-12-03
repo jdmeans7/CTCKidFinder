@@ -3644,7 +3644,7 @@ input[type="button"].btn-block {
 
 .input-group .form-control {
   width: 100%;
-  margin-bottom: 0;
+  margin-bottom: 0;a
 }
 
 .input-group-lg > .form-control,
@@ -4383,13 +4383,17 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
+.navbar{
+    background-image: none;
+}
+
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: #ff6600;
   border-color: #e7e7e7;
 }
 
 .navbar-default .navbar-brand {
-  color: #777777;
+  color: #ff6600;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -4399,11 +4403,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-text {
-  color: #777777;
+    color: #cf7506;
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: #cf7506;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -4928,13 +4932,13 @@ a.list-group-item.active > .badge,
 }
 
 .jumbotron {
-  padding: 30px;
-  margin-bottom: 30px;
-  font-size: 21px;
-  font-weight: 200;
-  line-height: 2.1428571435;
-  color: inherit;
-  background-color: #eeeeee;
+    padding: 30px;
+    margin-bottom: 30px;
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 2.1428571435;
+    color: inherit;
+    background-color: #eeeeee;
 }
 
 .jumbotron h1 {

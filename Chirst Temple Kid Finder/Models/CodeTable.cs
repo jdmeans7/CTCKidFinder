@@ -11,10 +11,14 @@ namespace Chirst_Temple_Kid_Finder.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class CodeTable
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(5), MinLength(5)]
         public string ChildCode { get; set; }
         public string Room_Number { get; set; }
     }

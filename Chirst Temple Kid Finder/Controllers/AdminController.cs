@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Chirst_Temple_Kid_Finder.Models;
 using PagedList;
+using System.Data.Entity;
 #endregion Includes
 
 namespace Chirst_Temple_Kid_Finder.Controllers
@@ -265,7 +266,29 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                         // Put user in role
                         UserManager.AddToRole(objNewAdminUser.Id, strNewRole);
                     }
-                    return Redirect("~/Admin");
+                    if (strNewRole == "Parent")
+                    {
+                        bool emailExists = db.CodeAssignTables.AsNoTracking().Any(e => e.Email.Equals(Email));
+                        List<CodeAssignTable> codeList = db.CodeAssignTables.AsNoTracking().ToList();
+
+                        int id = db.CodeAssignTables.Count();
+                        string gen = Generate();
+                        CodeAssignTable entryAdd = new CodeAssignTable
+                        {
+                            Id = id,
+                            Email = Email,
+                            ChildCode = gen
+                        };
+                        CodeTable codeEntryAdd = new CodeTable
+                        {
+                            Id = id,
+                            ChildCode = gen
+                        };
+                        db.CodeAssignTables.Add(entryAdd);
+                        db.CodeTables.Add(codeEntryAdd);
+                        db.SaveChanges();
+                    }
+                return Redirect("~/Admin");
                 }
                 else
                 {
@@ -297,8 +320,11 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ExpandedUserDTO objExpandedUserDTO = GetUser(UserName);
-            CodeAssignTable objCodeAssign = db.CodeAssignTables.First(x => x.Email == objExpandedUserDTO.Email);
-            addCodeToList(objCodeAssign);
+            if (User.IsInRole("Parent"))
+            {
+                CodeAssignTable objCodeAssign = db.CodeAssignTables.First(x => x.Email == objExpandedUserDTO.Email);
+                addCodeToList(objCodeAssign);
+            }
             if (objExpandedUserDTO == null)
             {
                 return HttpNotFound();
@@ -342,7 +368,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
-
+        /*
         // GET: /Admin/AssignCode 
         [Authorize(Roles = "Administrator")]
         #region public ActionResult CodeAssignEdit(string email)
@@ -413,6 +439,54 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+
+        public ActionResult CodeAssignEdit(string email)
+        {
+            try
+            {
+                
+                bool emailExists = db.CodeAssignTables.AsNoTracking().Any(e => e.Email.Equals(email));
+                List<CodeAssignTable> codeList = db.CodeAssignTables.AsNoTracking().ToList();
+
+                if (emailExists)
+                {
+                    CodeAssignTable entryUpdate = db.CodeAssignTables.FirstOrDefault(x => x.Email == email);
+                    if (entryUpdate.ChildCode == null)
+                    {
+                        entryUpdate.ChildCode = Generate();
+                        db.Entry(entryUpdate).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else throw new Exception("Code already assigned");
+                }
+                else
+                {
+                    int id = db.CodeAssignTables.Count();
+                    string gen = Generate();
+                    CodeAssignTable entryAdd = new CodeAssignTable
+                    {
+                        Id = id,
+                        Email = email,
+                        ChildCode = gen
+                    };
+                    CodeTable codeEntryAdd = new CodeTable
+                    {
+                        Id = id,
+                        ChildCode = gen
+                    };
+                    db.CodeAssignTables.Add(entryAdd);
+                    db.CodeTables.Add(codeEntryAdd);
+                    db.SaveChanges();
+                }
+                return Redirect("~/Admin");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Error: " + ex);
+                return View("Index", GetCodeAssignUser(email));
+            }
+        }
+        */
         // DELETE: /Admin/DeleteUser
         [Authorize(Roles = "Administrator")]
         #region public ActionResult DeleteUser(string UserName)
@@ -771,6 +845,38 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             {
                 return null;
             }
+        }
+
+        /*
+        public ActionResult Generate(string email)
+        {
+            Random rand = new Random();
+            int code = rand.Next(10000, 100000); //add if code exists condition
+            int id = db.CodeTables.Count();
+            string codeS = code.ToString();
+            CodeAssignTable cat = GetCodeAssignUser(email);
+            if (cat == null)
+            {
+                return HttpNotFound();
+            }
+            cat.ChildCode = codeS;
+            CodeTable entryAdd = new CodeTable
+            {
+                Id = id,
+                ChildCode = codeS
+            };
+            db.CodeTables.Add(entryAdd);
+            db.Entry(cat).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        */
+
+        public String Generate()
+        {
+            Random rand = new Random();
+            int code = rand.Next(10000, 100000);
+            return code.ToString();
         }
     }
 }

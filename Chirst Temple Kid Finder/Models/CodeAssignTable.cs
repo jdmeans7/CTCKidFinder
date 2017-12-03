@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Chirst_Temple_Kid_Finder.Models
 {
     using System;
@@ -16,7 +18,11 @@ namespace Chirst_Temple_Kid_Finder.Models
     {
 
         public int Id { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+        [Required]
+        [StringLength(5), MinLength(5)]
         public string ChildCode { get; set; }
     }
 }

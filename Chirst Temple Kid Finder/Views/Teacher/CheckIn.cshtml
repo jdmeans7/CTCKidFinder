@@ -4,25 +4,17 @@
     ViewBag.Title = "Check-In";
 }
 
-<head>
-    <style>
-        input[type=text]:focus {
-            border: 3px solid #808080;
-        }
-    </style>
-</head>
-
 <h2>Check-In</h2>
 
 @using (Html.BeginForm("Index", "Teacher", FormMethod.Post))
 {
     @Html.Label("Room Number")
-    @Html.TextBox("roomNumber")
+    @Html.TextBox("roomNumber", null, htmlAttributes: new { @class = "form-control" })
     <br />
     @Html.Label("Child Code")
-    @Html.TextBox("childCode")
+    @Html.TextBox("childCode", null, htmlAttributes: new { @class = "form-control" })
     <br />
-    <input type="submit" value="Check in">
+    <input type="submit" value="Check in" class="btn btn-default">
 }
 
 

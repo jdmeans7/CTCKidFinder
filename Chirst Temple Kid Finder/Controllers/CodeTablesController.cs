@@ -47,11 +47,18 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ChildCode,Room_Number")] CodeTable codeTable)
+        public ActionResult Create([Bind(Include = "ChildCode,Room_Number")] CodeTable codeTable)
         {
             if (ModelState.IsValid)
             {
-                db.CodeTables.Add(codeTable);
+                int id = db.CodeTables.Count();
+                CodeTable entryAdd = new CodeTable
+                {
+                    Id = id,
+                    ChildCode = codeTable.ChildCode,
+                    Room_Number = codeTable.Room_Number
+                };
+                db.CodeTables.Add(entryAdd);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -112,6 +119,22 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         {
             CodeTable codeTable = db.CodeTables.Find(id);
             db.CodeTables.Remove(codeTable);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Generate()
+        {
+            Random rand = new Random();
+            int code = rand.Next(10000,100000); //Need to pad string with 0s
+            int id = db.CodeTables.Count();
+            string codeS = code.ToString();
+            CodeTable entryAdd = new CodeTable
+            {
+                Id = id,
+                ChildCode = codeS
+            };
+            db.CodeTables.Add(entryAdd);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
