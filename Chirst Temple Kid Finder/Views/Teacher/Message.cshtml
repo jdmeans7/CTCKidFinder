@@ -1,0 +1,31 @@
+﻿@model Chirst_Temple_Kid_Finder.Models.MessageViewModel
+@{
+    ViewBag.Title = "Teacher Message";
+}
+
+<h2>Send a Message</h2>
+
+@using (Html.BeginForm("SubmitMessage", "Teacher", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.ValidationSummary();
+
+    @Html.LabelFor(m => m.KidCode);
+    <br />
+    @Html.TextBoxFor(m => m.KidCode, new { required = "required" });
+    <br />
+    <br />
+
+    @Html.LabelFor(m => m.Subject);
+    <br />
+    @Html.TextBoxFor(m => m.Subject, new { required = "required" });
+    <br />
+    <br />
+
+    @Html.LabelFor(m => m.Message);
+    <br />
+    @Html.TextAreaFor(m => m.Message, new { required = "required" });
+    <br />
+    <br />
+
+    <input type="submit" class="btn btn-primary " value="Submit" />
+}
