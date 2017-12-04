@@ -11,19 +11,19 @@
 
     @Html.LabelFor(m => m.KidCode);
     <br />
-    @Html.TextBoxFor(m => m.KidCode, new { required = "required" });
+    @Html.TextBoxFor(m => m.KidCode, new { required = "required", @class = "form-control" });
     <br />
     <br />
 
     @Html.LabelFor(m => m.Subject);
     <br />
-    @Html.TextBoxFor(m => m.Subject, new { required = "required" });
+    @Html.TextBoxFor(m => m.Subject, new { required = "required", @class = "form-control" });
     <br />
     <br />
 
     @Html.LabelFor(m => m.Message);
     <br />
-    @Html.TextAreaFor(m => m.Message, new { required = "required" });
+    @Html.TextAreaFor(m => m.Message, new { required = "required", @class = "form-control" });
     <br />
     <br />
 

@@ -376,6 +376,7 @@
     <Content Include="Views\Teacher\CheckIn.cshtml" />
     <Content Include="Views\Admin\ViewAssignments.cshtml" />
     <Content Include="Views\Location\KidLocation.cshtml" />
+    <Content Include="Views\Teacher\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

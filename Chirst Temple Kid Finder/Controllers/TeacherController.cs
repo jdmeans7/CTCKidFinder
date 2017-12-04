@@ -24,7 +24,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View();
         }
 
-        
+        [Authorize(Roles = "Teacher")]
         // GET: Check-In
         public ActionResult CheckIn(string presetName)
         {
@@ -51,7 +51,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         
        
-
+        [Authorize(Roles = "Teacher")]
         // GET: Teacher/Details/5
         public ActionResult Details(int? id)
         {
@@ -67,6 +67,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View(codeAssignTable);
         }
 
+        [Authorize(Roles = "Teacher")]
         // GET: Teacher/Create
         public ActionResult Create()
         {
@@ -78,6 +79,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Email,ChildCode")] CodeAssignTable codeAssignTable)
         {
             if (ModelState.IsValid)
@@ -90,6 +92,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View(codeAssignTable);
         }
 
+        [Authorize(Roles = "Teacher")]
         // GET: Teacher/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -110,6 +113,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Teacher")]
         public ActionResult Edit([Bind(Include = "Id,ChildCode,Room_Number")] CodeTable codeTable)
         {
             if (ModelState.IsValid)
@@ -121,6 +125,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View(codeTable);
         }
 
+        [Authorize(Roles ="Teacher")]
         // GET: Teacher/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -139,6 +144,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // POST: Teacher/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
             CodeAssignTable codeAssignTable = db.CodeAssignTables.Find(id);
@@ -156,12 +162,14 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles ="Teacher")]
         // GET for Teacher/Message
         public ActionResult Message()
         {
             return View();
         }
 
+        [Authorize(Roles ="Teacher")]
         // POST for Teacher/Message
         public ActionResult SubmitMessage(MessageViewModel model)
         {

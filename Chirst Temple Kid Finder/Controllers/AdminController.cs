@@ -200,6 +200,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult ViewAssignments()
         {
             return View(db.CodeAssignTables.ToList());

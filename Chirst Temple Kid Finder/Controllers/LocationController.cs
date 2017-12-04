@@ -15,10 +15,12 @@ namespace Chirst_Temple_Kid_Finder.Controllers
     {
         private dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3();
         // GET: Location
+        [Authorize(Roles ="Parent")]
         public ActionResult Index()
         {
             return View();
         }
+        [Authorize(Roles ="Parent")]
         public ActionResult KidLocation()
         {
             //Sets cat = entry with the correct email
