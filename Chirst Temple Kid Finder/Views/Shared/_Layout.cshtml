@@ -35,12 +35,12 @@
                         <li>@Html.ActionLink("Check-In","Index","Teacher")</li>
                         <li>@Html.ActionLink("Message", "Message", "Teacher")</li>
                     }
-                    <!--
-                    @if (User.IsInRole("Parent") || User.IsInRole("Administrator"))
+                    
+                    @if (User.IsInRole("Parent"))
                     {
-                        <li>@Html.ActionLink("Find Child", "Index","Parent")</li>
+                        <li>@Html.ActionLink("Find Child", "KidLocation","Location")</li>
                     }
-                    -->
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

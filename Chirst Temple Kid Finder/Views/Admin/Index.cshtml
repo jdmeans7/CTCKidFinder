@@ -9,7 +9,7 @@
 <br />
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default"})
-    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default"})
+    <!--@Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default"})-->
     @Html.ActionLink("View Assignments", "ViewAssignments", null, new { @class = "btn btn-default"})
     @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-default"})
 </p>
@@ -39,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td> 
-                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
+                @Html.ActionLink("Edit Roles", "EditRoles", new { UserName = item.UserName }) |
                 @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
                 {
                     @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName },

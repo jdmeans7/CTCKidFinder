@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Chirst_Temple_Kid_Finder.Models;
 using System.Net.Mail;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace Chirst_Temple_Kid_Finder.Controllers
 {
@@ -22,23 +24,33 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             return View();
         }
 
+        
         // GET: Check-In
         public ActionResult CheckIn(string presetName)
         {
             return View();
         }
 
+        
         //POST: Check-In
         [Authorize(Roles = "Teacher")]
         [HttpPost]
-        public ActionResult CheckIn(string roomNumber,string childCode)
+        public ActionResult CheckIn(string roomNumber, string childCode)
         {
+            
             CodeTable ct = db.CodeTables.First(x => x.ChildCode == childCode);
             ct.Room_Number = roomNumber;
-            db.Entry(ct).State = EntityState.Modified;
+
+            db.CodeTables.Attach(ct);
+            var entry = db.Entry(ct);
+            entry.Property(x => x.Room_Number).IsModified = true;
+            //db.Entry(ct).State = EntityState.Modified;
             db.SaveChanges();
+            
             return Redirect("/Teacher");
         }
+        
+       
 
         // GET: Teacher/Details/5
         public ActionResult Details(int? id)
@@ -85,12 +97,12 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CodeAssignTable codeAssignTable = db.CodeAssignTables.Find(id);
-            if (codeAssignTable == null)
+            CodeTable codeTable = db.CodeTables.Find(id);
+            if (codeTable == null)
             {
                 return HttpNotFound();
             }
-            return View(codeAssignTable);
+            return View(codeTable);
         }
 
         // POST: Teacher/Edit/5
@@ -98,15 +110,15 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,ChildCode")] CodeAssignTable codeAssignTable)
+        public ActionResult Edit([Bind(Include = "Id,ChildCode,Room_Number")] CodeTable codeTable)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(codeAssignTable).State = EntityState.Modified;
+                db.Entry(codeTable).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(codeAssignTable);
+            return View(codeTable);
         }
 
         // GET: Teacher/Delete/5

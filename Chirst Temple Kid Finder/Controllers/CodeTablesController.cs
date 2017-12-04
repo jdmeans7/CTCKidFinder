@@ -86,15 +86,13 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ChildCode,Room_Number")] CodeTable codeTable)
+        public ActionResult Edit(int? id, string roomNumber)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(codeTable).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(codeTable);
+            CodeTable ct = db.CodeTables.Find(id);
+            ct.Room_Number = roomNumber;
+            db.Entry(ct).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: CodeTables/Delete/5

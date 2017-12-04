@@ -98,7 +98,6 @@ namespace Chirst_Temple_Kid_Finder.Controllers
             List<RoleDTO> colRoleDTO = (from objRole in roleManager.Roles select new RoleDTO { ID = objRole.Id, RoleName = objRole.Name }).ToList();
             return View(colRoleDTO);
         }
-
         #endregion
 
         // GET: /Admin/AddRole
@@ -111,7 +110,6 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 
             return View(objRoleDTO);
         }
-
         #endregion
 
         // PUT: /Admin/AddRole
@@ -202,6 +200,10 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         }
         #endregion
 
+        public ActionResult ViewAssignments()
+        {
+            return View(db.CodeAssignTables.ToList());
+        }
         // Users *****************************
 
         dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3 db = new dbcaa9cff9bf624b1ebcf9a8120126a40eEntities3();
