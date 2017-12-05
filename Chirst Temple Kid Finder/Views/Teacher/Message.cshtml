@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm("SubmitMessage", "Teacher", FormMethod.Post, new { @class = "form" }))
 {
-    @Html.ValidationSummary();
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" });
 
     @Html.LabelFor(m => m.KidCode);
     <br />

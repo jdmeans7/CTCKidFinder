@@ -37,17 +37,25 @@ namespace Chirst_Temple_Kid_Finder.Controllers
         [HttpPost]
         public ActionResult CheckIn(string roomNumber, string childCode)
         {
-            
-            CodeTable ct = db.CodeTables.First(x => x.ChildCode == childCode);
-            ct.Room_Number = roomNumber;
+            bool codeExist = db.CodeTables.AsNoTracking().Any(x => x.ChildCode == childCode);
+            if (codeExist)
+            {
+                CodeTable ct = db.CodeTables.First(x => x.ChildCode == childCode);
+                ct.Room_Number = roomNumber;
 
-            db.CodeTables.Attach(ct);
-            var entry = db.Entry(ct);
-            entry.Property(x => x.Room_Number).IsModified = true;
-            //db.Entry(ct).State = EntityState.Modified;
-            db.SaveChanges();
-            
-            return Redirect("/Teacher");
+                db.CodeTables.Attach(ct);
+                var entry = db.Entry(ct);
+                entry.Property(x => x.Room_Number).IsModified = true;
+                //db.Entry(ct).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Redirect("/Teacher");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Child code not found");
+                return View();
+            }
         }
         
        
@@ -179,7 +187,7 @@ namespace Chirst_Temple_Kid_Finder.Controllers
 
             if (KidCodeLookup == null)
             {
-                ModelState.AddModelError("Invalid KidCode", "Invalid KidCode, try again.");
+                ModelState.AddModelError(string.Empty, "Invalid Child Code, try again.");
 
                 return View("Message", model);
             }

@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<Chirst_Temple_Kid_Finder.Models.CodeTable>
+@model Chirst_Temple_Kid_Finder.Models.CodeTable
 
 @{
     ViewBag.Title = "Check-In";
@@ -7,13 +7,16 @@
 
 <h2>Check-In</h2>
 
+
 @using (Html.BeginForm("CheckIn", "Teacher", FormMethod.Post))
 {
+    @Html.ValidationSummary(true, "", new { @class = "text-danger"})
     @Html.Label("Room Number")
-    @Html.TextBox("roomNumber", null, htmlAttributes: new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.Room_Number, null, htmlAttributes: new { @class = "form-control" })
     <br />
     @Html.Label("Child Code")
-    @Html.TextBox("childCode", null, htmlAttributes: new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.ChildCode, null, htmlAttributes: new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.ChildCode, "", htmlAttributes: new { @class = "text-danger"})
     <br />
     <input type="submit" value="Check in" class="btn btn-default">
 }
