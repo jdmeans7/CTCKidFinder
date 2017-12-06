@@ -43,10 +43,12 @@ namespace Chirst_Temple_Kid_Finder.Controllers
                 CodeTable ct = db.CodeTables.First(x => x.ChildCode == childCode);
                 ct.Room_Number = roomNumber;
 
+                /*
                 db.CodeTables.Attach(ct);
                 var entry = db.Entry(ct);
                 entry.Property(x => x.Room_Number).IsModified = true;
-                //db.Entry(ct).State = EntityState.Modified;
+                */
+                db.Entry(ct).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return Redirect("/Teacher");
