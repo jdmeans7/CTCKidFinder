@@ -23,6 +23,7 @@ namespace Chirst_Temple_Kid_Finder.Models
         public string Email { get; set; }
         [Required]
         [StringLength(5), MinLength(5)]
+        [Display(Name = "Child Code")]
         public string ChildCode { get; set; }
     }
 }
